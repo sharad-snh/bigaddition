@@ -6,4 +6,4 @@ Readers are encouraged to use it as a reference for their own implementation. Th
 implementation. However, it gives you can idea of how it can be done. 
 
 You can refer to this work as "Sharad Sinha,Big Addition Reference Implementation, CHiPES, NTU, Singapore,
-March 2013 <include the github link here>"
+March 2013. include the github link here"
