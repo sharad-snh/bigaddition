@@ -1,0 +1,159 @@
+/* 
+ * File:   main.c
+ * Author: Sharad Sinha
+ * Blog: www.sharadsinha.wordpress.com
+ * E-mail:sharad_sinha@pmail.ntu.edu.sg
+ * Center for High Performance Embedded Systems (CHiPES)
+ * N4-02A-32, School of Computer Engineering,
+ * Nanyang Avenue 639798
+ * Nanyang Technological University
+ * Singapore
+ * Created on 22 March, 2013, 6:43 PM
+ * ------------------------------------------------------------------------------ 
+ * Copyright (c) 2013 CHiPES, NTU
+ * www.chipes.ntu.edu.sg
+ * All Rights Reserved 
+ *------------------------------------------------------------------------------ 
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/*
+ * 
+ */
+int main() {
+      
+    int len_num1, len_num2, carry_in;
+    int i,j,k, iteration_limit,temp1, temp2;
+    
+        
+    printf("Enter the length of 1st number (max 32767):");
+    scanf("%d",&len_num1);
+    char num1[len_num1];
+    printf("Enter the length of 2nd number (max 32767):");
+    scanf("%d",&len_num2);
+    char num2[len_num2];
+    
+    
+    printf("Enter the 1st number beginning from most significant digit:");
+    scanf("%s",&num1);
+        
+    printf("Enter the 2nd number beginning from most significant digit:");
+    scanf("%s",&num2);
+    
+    printf("The 1st number is:%s\n",num1);
+    printf("The 2nd number is:%s\n",num2);
+    
+    
+    /* To decide the size of the array to hold the result
+     * Note that a 3 digit no. added to another 3 digit no. can have a max
+     * length of 4. The most significant digit (MSD) being 1.
+     * This MSD is not stored in the result array but is reflected in carry_in
+     * which gets printed when it equals 1 for the last addition operation
+     */
+    if(len_num1 >= len_num2)
+    {
+       iteration_limit = len_num1;
+    }        
+    else
+    {
+       iteration_limit = len_num2;
+    }   
+    int result[iteration_limit]; 
+ 
+    /*When length of 1st number is greater than the length of second number*/  
+     if(len_num1 > len_num2)
+    {
+        carry_in=0;
+        for(i=(len_num1-1);i>=len_num2;i--)
+        {
+           temp1 = (num1[i]-'0')+ (num2[i-len_num2]-'0')+carry_in;
+           if(temp1 > 9)
+           {
+             temp2 = temp1-10;
+             carry_in = 1;
+             result[i]= temp2;
+           }
+           else
+             result[i]=temp1;    
+        }
+        for(j=(len_num1-len_num2-1);i>=0;i--)
+        {
+           temp1 = (num1[j]-'0')+carry_in;
+           if(temp1 > 9)
+           {
+              temp2 = temp1-10;
+              carry_in = 1;
+              result[j]= temp2;
+           }
+           else
+              result[j]=temp1;  
+        } 
+        if(carry_in == 1)
+            printf("%d",carry_in);
+        for(k=0; k<len_num1;k++)
+            printf("%d",result[k]);
+    }
+    
+    /*When length of 2nd number is greater than the length of 1st number*/
+    if(len_num2 > len_num1)
+    {
+        carry_in=0;
+        for(i=(len_num2-1);i>=len_num1;i--)
+        {
+           temp1 = (num2[i]-'0')+ (num1[i-len_num1]-'0')+carry_in;
+           //printf("\n temp1=%d",temp1);
+           if(temp1 > 9)
+           {
+             temp2 = temp1-10;
+             carry_in = 1;
+             result[i]= temp2;
+           }
+           else
+             result[i]=temp1;    
+        }
+        for(j=(len_num2-len_num1-1);i>=0;i--)
+        {
+           temp1 = (num2[j]-'0')+carry_in;
+           if(temp1 > 9)
+           {
+              temp2 = temp1-10;
+              carry_in = 1;
+              result[j]= temp2;
+           }
+           else
+              result[j]=temp1;  
+        } 
+        if(carry_in == 1)
+            printf("%d",carry_in);
+        for(k=0; k<len_num2;k++)
+            printf("%d",result[k]);
+    }
+    
+ /* When the length of the two numbers are the same*/   
+    if(len_num1 == len_num2)
+    {
+       carry_in=0;
+       for(i= (iteration_limit-1);i >=0;i--)
+       {
+        temp1 = (num1[i]-'0')+ (num2[i]-'0')+carry_in;
+        if(temp1 > 9)
+        {
+          temp2 = temp1-10;
+          carry_in = 1;
+          result[i]= temp2;
+        }
+        else
+            result[i]=temp1;         
+       } 
+       if(carry_in == 1)
+        printf("%d",carry_in);
+       for(i=0; i<iteration_limit;i++)
+        printf("%d",result[i]);
+   }
+      
+    return (EXIT_SUCCESS);
+}
+
